@@ -130,9 +130,6 @@
   }
   .scrollcue .line { width: 1px; height: 34px; background: linear-gradient(var(--teal), transparent); }
 
-  /* hero-only signature line (staged launch) */
-  .hero-foot { position: absolute; bottom: clamp(1.6rem, 5vw, 2.8rem); left: 50%; translate: -50% 0; text-align: center; opacity: 0; animation: rise 1s ease 1.1s forwards; }
-
   /* ---------- prose ---------- */
   .prose p { color: var(--mist); font-size: clamp(1.02rem, 2.4vw, 1.18rem); max-width: 60ch; }
   .prose p + p { margin-top: 1.25rem; }
@@ -198,7 +195,7 @@
 
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation: none !important; transition: none !important; }
-    .hero-inner, .scrollcue, .hero-foot { opacity: 1 !important; }
+    .hero-inner, .scrollcue { opacity: 1 !important; }
     .frame .corner path { stroke-dashoffset: 0 !important; }
     .reveal { opacity: 1 !important; transform: none !important; }
     .caret { animation: none !important; }
@@ -221,13 +218,9 @@
     <div class="hero-inner">
       <img class="logo" src="./jnot-logo.png" alt="jnot" />
       <h1 class="lead">What will you ask of me next?<span class="caret" aria-hidden="true">▮</span></h1>
-      <p class="subline">Bring the problem. I'll bring the build.</p>
+      <p class="subline">Let's see what comes next.</p>
       <p class="meta">// <b>jnot</b> · web developer · adelaide ↔ anywhere</p>
     </div>
-/*
-    <div class="hero-foot">
-      <p class="sig-line">jnot is <span class="sig-not">not</span> <span class="rotate" id="rotate">the long way round.</span></p>
-    </div> */
   </header>
 
 </main>
@@ -240,30 +233,6 @@
       entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
     }, { threshold: 0.18 });
     els.forEach(function (el) { io.observe(el); });
-  })();
-
-  // Rotating "jnot is not…" signature — paused under reduced-motion
-  (function () {
-    var el = document.getElementById('rotate');
-    if (!el) return;
-    var phrases = [
-      "the long way round.",
-      "complexity for its own sake.",
-      "features nobody asked for.",
-      "your wasted time.",
-      "going to overbuild it."
-    ];
-    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduce) return;
-    var i = 0;
-    setInterval(function () {
-      el.style.opacity = 0;
-      setTimeout(function () {
-        i = (i + 1) % phrases.length;
-        el.textContent = phrases[i];
-        el.style.opacity = 1;
-      }, 450);
-    }, 3000);
   })();
 </script>
 </body>

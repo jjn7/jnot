@@ -44,7 +44,7 @@ const shotAlt = (kind: string) =>
       <p class="brief">{d.brief}</p>
 
       <dl class="facts">
-        <div><dt class="mono">Client</dt><dd>{d.clientType}</dd></div>
+        <div><dt class="mono">{d.via === 'own' ? 'Project' : 'Client'}</dt><dd>{d.clientType}</dd></div>
         <div><dt class="mono">Location</dt><dd>{d.location}</dd></div>
         <div><dt class="mono">Platform</dt><dd>{d.platform}</dd></div>
         <div><dt class="mono">My role</dt><dd>{d.role}</dd></div>

@@ -36,10 +36,10 @@ export function toView(entry: Project): ProjectView {
   };
 }
 
-/** Featured projects in grid order: direct clients first, then agency work. */
+/** Featured projects in grid order: client work, then my own ventures, then agency work. */
 export async function getFeatured(): Promise<ProjectView[]> {
   const all = await getCollection('projects', ({ data }) => data.featured);
-  const rank = { direct: 0, agency: 1 } as const;
+  const rank = { direct: 0, own: 1, agency: 2 } as const;
   return all
     .sort((a, b) => rank[a.data.via] - rank[b.data.via] || a.data.order - b.data.order)
     .map(toView);

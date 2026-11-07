@@ -304,7 +304,7 @@ export const about = {
   // Don't name the agency here or anywhere else in this public repo (see content.config.ts).
   paragraphs: [
     'I spent eight years in retail management and hospitality before I built my first website. It gave me a first-hand understanding of what small business owners need from their website, and it still shapes how I work.',
-    'After studying software engineering at 42 Adelaide, I joined an independent creative and marketing studio in Adelaide in September 2022. I’m the main point of contact for my clients there, from the first brief through rounds of feedback until it’s right on desktop and mobile.',
+    'After studying software engineering at 42 Adelaide, I joined an independent creative and marketing studio in Adelaide in September 2022. I’m the main point of contact for all development work here.',
     'Outside that work, I designed and built Fire Path AI from scratch, and in 2026 I co-founded IP Venture Studio, where it now lives. I also take on my own clients, like All Build SA.',
   ],
   facts: [

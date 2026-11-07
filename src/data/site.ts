@@ -84,11 +84,6 @@ export const codeWork = [
     body: 'A mobile resources app for Resolute Ready, with its own content management platform, built from the ground up.',
     tags: ['Mobile app', 'In progress'],
   },
-  {
-    title: 'Grok Academy',
-    body: 'Contributed to the rebuild of Grok Academy’s Django learning platform, used by schools across Australia and New Zealand.',
-    tags: ['Python', 'Django', '2025–2026'],
-  },
 ] as const;
 
 export const about = {

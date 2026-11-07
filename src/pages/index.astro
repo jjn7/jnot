@@ -1,0 +1,29 @@
+---
+import Base from '../layouts/Base.astro';
+import Hero from '../sections/Hero.astro';
+import Work from '../sections/Work.astro';
+import Process from '../sections/Process.astro';
+import Skills from '../sections/Skills.astro';
+import About from '../sections/About.astro';
+import Contact from '../sections/Contact.astro';
+import { site } from '../data/site';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: site.name,
+  url: site.url,
+  jobTitle: 'Web Designer & Developer',
+  description: site.lede,
+};
+---
+
+<Base>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(jsonLd)} is:inline />
+  <Hero />
+  <Work />
+  <Process />
+  <Skills />
+  <About />
+  <Contact />
+</Base>

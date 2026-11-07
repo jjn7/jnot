@@ -1,23 +1,17 @@
 ---
-import fs from 'node:fs';
-import path from 'node:path';
 import SectionHead from '../components/SectionHead.astro';
 import Frame from '../components/Frame.astro';
 import { contact } from '../data/site';
 
 const prettyUrl = (url: string) => url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '');
-const hasResume = fs.existsSync(path.join(process.cwd(), 'public', contact.resume));
 
-type Row = { label: string; value: string; href?: string; external?: boolean; download?: boolean; todo?: string };
+type Row = { label: string; value: string; href?: string; external?: boolean; todo?: string };
 const rows: Row[] = [
   { label: 'email', value: contact.email, href: `mailto:${contact.email}` },
   { label: 'whatsapp', value: contact.whatsapp.display, href: contact.whatsapp.href, external: true },
   contact.linkedin
     ? { label: 'linkedin', value: prettyUrl(contact.linkedin), href: contact.linkedin, external: true }
     : { label: 'linkedin', value: 'Add your profile URL in src/data/site.ts', todo: 'contact: LinkedIn URL' },
-  hasResume
-    ? { label: 'resume', value: 'Download PDF', href: contact.resume, download: true }
-    : { label: 'resume', value: `Add public${contact.resume}`, todo: 'contact: resume PDF' },
 ];
 ---
 
@@ -35,12 +29,11 @@ const rows: Row[] = [
               <a
                 href={r.href}
                 target={r.external ? '_blank' : undefined}
-                rel={r.external ? 'noopener' : r.download ? 'nofollow' : undefined}
-                download={r.download ? 'Joel-Nottle-resume.pdf' : undefined}
+                rel={r.external ? 'noopener' : undefined}
               >
                 <span class="label mono">{r.label}</span>
                 <span class="value">{r.value}</span>
-                <span class="go" aria-hidden="true">{r.download ? '↓' : r.external ? '↗' : '→'}</span>
+                <span class="go" aria-hidden="true">{r.external ? '↗' : '→'}</span>
                 {r.external && <span class="visually-hidden">(opens in a new tab)</span>}
               </a>
             ) : (

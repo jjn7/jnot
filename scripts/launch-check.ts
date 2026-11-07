@@ -5,7 +5,8 @@
  *   npm run launch-check -- --links   also checks every external link responds
  *
  * Anything still showing a placeholder carries a data-todo attribute; this lists
- * them and exits non-zero, so the deploy workflow won't publish an unfinished site.
+ * them and exits non-zero. The deploy workflow shows the list in each run's summary
+ * but deploys regardless.
  */
 import { readFileSync, readdirSync, statSync } from 'node:fs';
 import path from 'node:path';

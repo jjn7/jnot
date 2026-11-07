@@ -25,8 +25,6 @@ export const contact = {
     href: 'https://wa.me/61415145768',
   },
   linkedin: 'https://www.linkedin.com/in/joelnottle' as string,
-  /** Drop the PDF into /public with this name. robots.txt keeps crawlers out of it. */
-  resume: '/joel-nottle-resume.pdf',
 } as const;
 
 export const nav = [

@@ -25,7 +25,9 @@ Consult these guides before working on related tasks:
 
 - Portfolio for jnot.net. See README.md for structure and commands.
 - Copy that isn't a case study lives in `src/data/site.ts`; case studies in `src/content/projects/<id>/index.md`.
-- Anything unfinished renders with a `data-todo` attribute; `npm run launch-check` lists them and the deploy workflow refuses to publish while any remain.
+- Commit straight to `main`; every push deploys to jnot.net immediately. No feature branches or pull requests.
+- Anything unfinished renders with a `data-todo` attribute; `npm run launch-check` lists them (report only, it doesn't block deploys).
+- No resume on the site. It's for winning direct work, not job applications.
 - Australian spelling, plain first-person voice. Keep text contrast at WCAG AA (tokens in `src/styles/global.css` are checked).
 - Never add a client `name` to a project without confirmation that the client agreed. The repo is public.
 - Never write the agency's name anywhere in this repo (code, comments, copy, commit messages). Refer to it as "an Adelaide marketing agency".

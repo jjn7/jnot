@@ -1,17 +1,13 @@
 name: Deploy to GitHub Pages
 
-# Builds the Astro site and publishes dist/ to jnot.net.
+# Every push to main builds the site and publishes it to jnot.net straight away.
+# A type error or failed build stops the deploy; unfinished content doesn't.
 # Requires: repo Settings → Pages → Source = "GitHub Actions".
 
 on:
   push:
     branches: [main]
-  workflow_dispatch:
-    inputs:
-      skip_launch_check:
-        description: Publish even if placeholders remain
-        type: boolean
-        default: false
+  workflow_dispatch: # redeploy by hand from the Actions tab
 
 permissions:
   contents: read
@@ -37,11 +33,11 @@ jobs:
       - run: npm run check
       - run: npm run build
 
-      # Fails if any screenshot, link or copy is still a placeholder,
-      # so an unfinished portfolio never goes live by accident.
-      - name: Launch check
-        if: ${{ !inputs.skip_launch_check }}
-        run: npm run launch-check
+      # Lists anything still unfinished in the run summary. Report only: never blocks.
+      - name: Launch check (report only)
+        run: |
+          npm run --silent launch-check | tee launch-check.txt || true
+          { echo '### Launch check'; echo '```'; cat launch-check.txt; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
 
       - uses: actions/upload-pages-artifact@v3
         with:

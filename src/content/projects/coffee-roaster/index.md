@@ -1,6 +1,6 @@
 ---
 order: 1
-featured: true
+featured: false # agency project, hidden until it has permission and screenshots
 anonymous: Specialty coffee roaster
 via: agency
 clientType: Coffee roaster and café

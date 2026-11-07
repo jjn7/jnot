@@ -1,6 +1,6 @@
 ---
 order: 5
-featured: true
+featured: false # agency project, hidden until it has permission and screenshots
 anonymous: Mushroom producer
 via: agency
 clientType: Producer landing page

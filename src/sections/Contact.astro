@@ -30,7 +30,7 @@ const rows: Row[] = [
     <ul class="links" role="list">
       {
         rows.map((r) => (
-          <li>
+          <li hidden={!r.href && !import.meta.env.DEV} data-todo={!r.href && !import.meta.env.DEV ? r.todo : undefined}>
             {r.href ? (
               <a
                 href={r.href}

@@ -8,26 +8,24 @@ const projects = await getFeatured();
 const direct = projects.filter((p) => p.data.via === 'direct');
 const agency = projects.filter((p) => p.data.via === 'agency');
 
-const platforms = [...new Set(projects.map((p) => p.data.platform.split(' ')[0]))];
-const listFormat = new Intl.ListFormat('en-AU', { style: 'long', type: 'conjunction' });
+const showGroups = direct.length > 0 && agency.length > 0;
 ---
 
 <section class="section" id="work" aria-labelledby="work-title">
   <div class="wrap">
     <SectionHead index="01" eyebrow="work" title="Selected work" id="work-title">
-      <p>
-        Sites for small and medium businesses, built in {listFormat.format(platforms)}. Each one opens a short
-        case study.
-      </p>
+      <p>Websites for small businesses, from the first questions through to launch and marketing setup.</p>
     </SectionHead>
 
     {
       direct.length > 0 && (
         <div class="group">
-          <div class="group-head">
-            <h3>My own clients</h3>
-            <p>Designed, built and set up for marketing, working directly with the business owner.</p>
-          </div>
+          {showGroups && (
+            <div class="group-head">
+              <h3>My own clients</h3>
+              <p>Designed, built and set up for marketing, working directly with the business owner.</p>
+            </div>
+          )}
           <ul class="grid grid--direct" role="list">
             {direct.map((project) => (
               <li>
@@ -42,10 +40,12 @@ const listFormat = new Intl.ListFormat('en-AU', { style: 'long', type: 'conjunct
     {
       agency.length > 0 && (
         <div class="group">
-          <div class="group-head">
-            <h3>Agency work</h3>
-            <p>Built as a developer at an Adelaide marketing agency.</p>
-          </div>
+          {showGroups && (
+            <div class="group-head">
+              <h3>Agency work</h3>
+              <p>Built as a developer at an Adelaide marketing agency.</p>
+            </div>
+          )}
           <ul class="grid" role="list">
             {agency.map((project) => (
               <li>

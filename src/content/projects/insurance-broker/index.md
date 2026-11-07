@@ -1,6 +1,6 @@
 ---
 order: 4
-featured: true
+featured: false # agency project, hidden until it has permission and screenshots
 anonymous: Insurance brokerage
 via: agency
 clientType: Professional services

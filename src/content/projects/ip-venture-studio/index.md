@@ -6,7 +6,7 @@ name: IP Venture Studio
 anonymous: Adelaide venture studio
 clientType: Venture studio I co-founded
 location: Adelaide, South Australia
-platform: Custom HTML, CSS and JavaScript # TODO: confirm how it's built
+platform: Custom HTML, CSS and JavaScript
 role: Co-founder, designed and built the site
 summary: The website for an Adelaide venture studio I co-founded, explaining how it turns inventions into owned assets without giving the inventions away.
 brief: Explain what a venture studio does and how it works, and show a portfolio of Australian inventions without revealing anything confidential.
@@ -16,7 +16,7 @@ built:
   - A portfolio section that describes six lead assets from a safe distance
   - Sections for partners and investors, and an enquiry process that starts with an NDA and a confidential briefing
   - Hosted on Cloudflare, with GA4 set up from launch
-stack: [HTML, CSS, JavaScript, Cloudflare, GA4]
+stack: [HTML, CSS, JavaScript, JSON-LD, Cloudflare, GA4]
 url: https://ipventurestudio.com.au
-draft: true # check the platform line, then set to false
+draft: false
 ---

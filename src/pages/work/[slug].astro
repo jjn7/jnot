@@ -7,20 +7,21 @@ import { getFeatured, type ProjectView } from '../../lib/projects';
 
 export const getStaticPaths = (async () => {
   const projects = await getFeatured();
+  const many = projects.length > 1;
   return projects.map((project, i) => ({
     params: { slug: project.id },
     props: {
       project,
-      prev: projects[(i - 1 + projects.length) % projects.length]!,
-      next: projects[(i + 1) % projects.length]!,
+      prev: many ? projects[(i - 1 + projects.length) % projects.length] : undefined,
+      next: many ? projects[(i + 1) % projects.length] : undefined,
     },
   }));
 }) satisfies GetStaticPaths;
 
 interface Props {
   project: ProjectView;
-  prev: ProjectView;
-  next: ProjectView;
+  prev?: ProjectView;
+  next?: ProjectView;
 }
 
 const { project: p, prev, next } = Astro.props;
@@ -106,18 +107,22 @@ const shotAlt = (kind: string) =>
       </aside>
     </div>
 
-    <nav class="wrap pager" aria-label="More case studies">
-      <a href={prev.href} class="prev">
-        <span class="mono">← previous</span>
-        <span class="t">{prev.title}</span>
-      </a>
-      <a href={next.href} class="next">
-        <span class="mono">next →</span>
-        <span class="t">{next.title}</span>
-      </a>
-    </nav>
+    {
+      prev && next && (
+        <nav class="wrap pager" aria-label="More case studies">
+          <a href={prev.href} class="prev">
+            <span class="mono">← previous</span>
+            <span class="t">{prev.title}</span>
+          </a>
+          <a href={next.href} class="next">
+            <span class="mono">next →</span>
+            <span class="t">{next.title}</span>
+          </a>
+        </nav>
+      )
+    }
 
-    <div class="wrap cta">
+    <div class:list={['wrap cta', { 'cta--ruled': !(prev && next) }]}>
       <p>Need something like this?</p>
       <a class="btn" href="/#contact">Get in touch <span class="arrow" aria-hidden="true">→</span></a>
     </div>
@@ -236,5 +241,6 @@ const shotAlt = (kind: string) =>
     gap: 1rem;
     padding-block: clamp(3rem, 6vw, 4.5rem);
   }
+  .cta--ruled { border-top: 1px solid var(--line-strong); }
   .cta p { font-size: var(--step-2); color: var(--paper); font-weight: 600; letter-spacing: -0.02em; }
 </style>

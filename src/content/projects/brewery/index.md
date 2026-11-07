@@ -1,6 +1,6 @@
 ---
 order: 2
-featured: true
+featured: false # agency project, hidden until it has permission and screenshots
 anonymous: Independent brewery
 via: agency
 clientType: Brewery

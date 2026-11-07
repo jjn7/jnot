@@ -63,7 +63,7 @@ export const skills = [
   },
   { group: 'Back end', items: ['PHP', 'Python', 'Django', 'Node.js / Express', 'PostgreSQL / PostGIS', 'Supabase'] },
   { group: 'Hosting and cloud', items: ['Vercel', 'Cloudflare', 'AWS', 'Azure', 'SiteGround', 'GitHub Pages'] },
-  { group: 'Tools', items: ['VS Code', 'Git / GitHub', 'Docker', 'Claude Code', 'Adobe XD', 'Canva'] },
+  { group: 'Tools', items: ['VS Code', 'Git / GitHub', 'Docker', 'Claude Code', 'Canva'] },
   { group: 'Marketing', items: ['GA4', 'Google Tag Manager', 'SEO', 'Google Ads', 'Looker Studio'] },
 ] as const;
 

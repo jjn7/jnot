@@ -1,0 +1,161 @@
+---
+import Device from './Device.astro';
+import type { ProjectView } from '../lib/projects';
+
+interface Props {
+  project: ProjectView;
+  /** Full-width card with screenshots beside the text (used for a lone featured project). */
+  wide?: boolean;
+}
+const { project: p, wide = false } = Astro.props;
+const sizes = wide
+  ? { desktop: '(min-width: 75em) 640px, (min-width: 56em) 52vw, 90vw', mobile: '(min-width: 56em) 180px, 25vw' }
+  : { desktop: '(min-width: 75em) 360px, (min-width: 44em) 45vw, 90vw', mobile: '(min-width: 44em) 110px, 25vw' };
+---
+
+<article class:list={['card', { 'card--wide': wide }]}>
+  <div class="shots">
+    <Device
+      kind="desktop"
+      image={p.desktop}
+      alt=""
+      sizes={sizes.desktop}
+      projectId={p.id}
+    />
+    <div class="phone">
+      <Device kind="mobile" image={p.mobile} alt="" sizes={sizes.mobile} projectId={p.id} />
+    </div>
+  </div>
+  <div class="body">
+    <p class="meta mono">
+      <span>{p.data.clientType}</span>
+      <span class="platform">{p.data.platform}</span>
+    </p>
+    <h3>
+      <a href={p.href} class="stretched">{p.title}</a>
+    </h3>
+    <p class="summary">{p.data.summary}</p>
+    {wide && <p class="role mono">{p.data.role}</p>}
+    <p class="cta mono" aria-hidden="true">Case study <span class="arrow">→</span></p>
+  </div>
+</article>
+
+<style>
+  .card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background: var(--ink-2);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    transition: border-color 0.25s, transform 0.3s var(--ease), background-color 0.25s;
+  }
+  /* logo-style brackets on two corners */
+  .card::before,
+  .card::after {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border: 2px solid var(--teal);
+    pointer-events: none;
+    transition: width 0.3s var(--ease), height 0.3s var(--ease), border-color 0.25s;
+  }
+  .card::before { top: -6px; left: -6px; border-right: 0; border-bottom: 0; }
+  .card::after { bottom: -6px; right: -6px; border-left: 0; border-top: 0; }
+
+  .card:hover,
+  .card:focus-within {
+    border-color: var(--line-strong);
+    background: var(--ink-3);
+    transform: translateY(-3px);
+  }
+  .card:hover::before,
+  .card:hover::after,
+  .card:focus-within::before,
+  .card:focus-within::after {
+    width: 28px;
+    height: 28px;
+    border-color: var(--lime);
+  }
+
+  /* screenshots: browser with a phone tucked in front */
+  .shots {
+    position: relative;
+    padding: 1rem 1rem 0;
+    overflow: hidden;
+    border-radius: var(--radius) var(--radius) 0 0;
+  }
+  .shots > :global(.desktop) {
+    margin-right: 12%;
+    transition: transform 0.5s var(--ease);
+  }
+  .phone {
+    position: absolute;
+    right: 1rem;
+    bottom: -14%;
+    width: 27%;
+    transition: transform 0.5s var(--ease);
+  }
+  .card:hover .phone { transform: translateY(-6%); }
+  .card:hover .shots > :global(.desktop) { transform: translateY(-2%); }
+
+  .body {
+    display: grid;
+    gap: 0.55rem;
+    flex: 1;
+    align-content: start;
+    padding: 1.15rem 1.25rem 1.3rem;
+    border-top: 1px solid var(--line);
+  }
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 0.9rem;
+    font-size: var(--step--1);
+    color: var(--muted);
+  }
+  .platform { color: var(--teal-bright); }
+  h3 { font-size: var(--step-1); }
+  h3 a { text-decoration: none; }
+  /* the whole card is clickable; the link stays a single, well-named target */
+  .stretched::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    border-radius: var(--radius);
+  }
+  .stretched:focus-visible { outline: none; }
+  .stretched:focus-visible::after { outline: 2px solid var(--spark); outline-offset: 4px; }
+  .summary { color: var(--sage); font-size: 0.97rem; }
+  .role { color: var(--teal-bright); font-size: var(--step--1); }
+
+  /* wide: screenshots left, text right */
+  @media (min-width: 56em) {
+    .card--wide { flex-direction: row; }
+    .card--wide .shots {
+      flex: 1.5;
+      padding: 1.5rem 1.5rem 0;
+      border-radius: var(--radius) 0 0 var(--radius);
+    }
+    .card--wide .phone { right: 1.5rem; width: 24%; bottom: -10%; }
+    .card--wide .body {
+      flex: 1;
+      align-content: center;
+      gap: 0.75rem;
+      padding: 2rem clamp(1.5rem, 3vw, 2.5rem);
+      border-top: 0;
+      border-left: 1px solid var(--line);
+    }
+    .card--wide h3 { font-size: var(--step-2); }
+    .card--wide .summary { font-size: var(--step-0); }
+  }
+  .cta {
+    margin-top: 0.35rem;
+    font-size: var(--step--1);
+    color: var(--lime);
+  }
+  .arrow { display: inline-block; transition: transform 0.25s var(--ease); }
+  .card:hover .arrow { transform: translateX(4px); }
+</style>

@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+# The resume names past employers; keep it out of search results.
+Disallow: /joel-nottle-resume.pdf
+
+Sitemap: https://jnot.net/sitemap-index.xml

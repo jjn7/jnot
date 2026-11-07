@@ -1,0 +1,60 @@
+---
+import SectionHead from '../components/SectionHead.astro';
+import { skills } from '../data/site';
+---
+
+<section class="section" id="skills" aria-labelledby="skills-title">
+  <div class="wrap">
+    <SectionHead index="03" eyebrow="skills" title="Skills and tools" id="skills-title">
+      <p>Visual builders when they suit the client, code when they don’t.</p>
+    </SectionHead>
+    <div class="groups">
+      {
+        skills.map((g) => (
+          <div class="group">
+            <h3 class="mono">{g.group}</h3>
+            <ul role="list">
+              {g.items.map((item) => (
+                <li>{item}</li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .groups {
+    display: grid;
+    gap: 2rem 1.75rem;
+  }
+  @media (min-width: 40em) {
+    .groups { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (min-width: 64em) {
+    .groups { grid-template-columns: repeat(4, 1fr); }
+  }
+  h3 {
+    margin-bottom: 0.9rem;
+    font-size: var(--step--1);
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--teal-bright);
+  }
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  li {
+    padding: 0.35rem 0.8rem;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    background: var(--ink-2);
+    font-size: 0.92rem;
+    color: var(--mist);
+    line-height: 1.4;
+  }
+</style>

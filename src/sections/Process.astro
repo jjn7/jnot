@@ -1,0 +1,57 @@
+---
+import SectionHead from '../components/SectionHead.astro';
+import { process } from '../data/site';
+---
+
+<section class="section" id="process" aria-labelledby="process-title">
+  <div class="wrap">
+    <SectionHead index="02" eyebrow="process" title="How I work" id="process-title">
+      <p>From brief to launch in four steps, with you able to see where things are at the whole way.</p>
+    </SectionHead>
+    <ol class="steps" role="list">
+      {
+        process.map((step, i) => (
+          <li>
+            <span class="num mono" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+            <h3>{step.title}</h3>
+            <p>{step.body}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .steps {
+    display: grid;
+    gap: 2rem 1.75rem;
+  }
+  @media (min-width: 40em) {
+    .steps { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (min-width: 64em) {
+    .steps { grid-template-columns: repeat(4, 1fr); }
+  }
+  li {
+    position: relative;
+    display: grid;
+    gap: 0.55rem;
+    align-content: start;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--line-strong);
+  }
+  /* a short lime tick on each rule, like a progress marker */
+  li::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: 0;
+    width: 2.25rem;
+    height: 2px;
+    background: var(--lime);
+  }
+  .num { color: var(--teal-bright); font-size: var(--step--1); }
+  h3 { font-size: var(--step-1); }
+  p { color: var(--sage); font-size: 0.97rem; }
+</style>

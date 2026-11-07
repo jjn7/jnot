@@ -1,0 +1,133 @@
+---
+import SectionHead from '../components/SectionHead.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { getFeatured } from '../lib/projects';
+import { codeWork } from '../data/site';
+
+const projects = await getFeatured();
+const direct = projects.filter((p) => p.data.via === 'direct');
+const agency = projects.filter((p) => p.data.via === 'agency');
+
+const platforms = [...new Set(projects.map((p) => p.data.platform.split(' ')[0]))];
+const listFormat = new Intl.ListFormat('en-AU', { style: 'long', type: 'conjunction' });
+---
+
+<section class="section" id="work" aria-labelledby="work-title">
+  <div class="wrap">
+    <SectionHead index="01" eyebrow="work" title="Selected work" id="work-title">
+      <p>
+        Sites for small and medium businesses, built in {listFormat.format(platforms)}. Each one opens a short
+        case study.
+      </p>
+    </SectionHead>
+
+    {
+      direct.length > 0 && (
+        <div class="group">
+          <div class="group-head">
+            <h3>My own clients</h3>
+            <p>Designed, built and set up for marketing, working directly with the business owner.</p>
+          </div>
+          <ul class="grid grid--direct" role="list">
+            {direct.map((project) => (
+              <li>
+                <ProjectCard project={project} wide={direct.length === 1} />
+              </li>
+            ))}
+          </ul>
+        </div>
+      )
+    }
+
+    {
+      agency.length > 0 && (
+        <div class="group">
+          <div class="group-head">
+            <h3>Agency work</h3>
+            <p>Built as a developer at an Adelaide marketing agency.</p>
+          </div>
+          <ul class="grid" role="list">
+            {agency.map((project) => (
+              <li>
+                <ProjectCard project={project} />
+              </li>
+            ))}
+          </ul>
+        </div>
+      )
+    }
+
+    <div class="code">
+      <h3 class="eyebrow"><span class="slash" aria-hidden="true">&lt;/&gt;</span> Code: work that isn’t a site design</h3>
+      <ul role="list" class="code-list">
+        {
+          codeWork.map((item) => (
+            <li>
+              <h4>{item.title}</h4>
+              <p>{item.body}</p>
+              <p class="tags mono">{item.tags.join(' · ')}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .group + .group { margin-top: clamp(3rem, 6vw, 4.5rem); }
+  .group-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.35rem 1.25rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.9rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .group-head h3 { font-size: var(--step-1); }
+  .group-head p { color: var(--muted); font-size: 0.95rem; }
+
+  .grid {
+    display: grid;
+    gap: clamp(1.25rem, 2.5vw, 1.75rem);
+    grid-template-columns: 1fr;
+  }
+  .grid > li { display: grid; }
+  @media (min-width: 44em) {
+    .grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (min-width: 75em) {
+    .grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  /* a lone direct client gets the full width */
+  .grid--direct:has(> li:only-child) { grid-template-columns: 1fr; }
+
+  .code {
+    margin-top: clamp(3rem, 6vw, 4.5rem);
+    padding-top: 1.75rem;
+    border-top: 1px dashed var(--line-strong);
+  }
+  .code h3 { margin-bottom: 1.25rem; }
+  .code-list {
+    display: grid;
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  @media (min-width: 52em) {
+    .code-list { grid-template-columns: repeat(3, 1fr); }
+  }
+  .code-list li {
+    display: grid;
+    gap: 0.45rem;
+    align-content: start;
+    padding: 1.25rem 1.35rem 1.4rem;
+    background: var(--ink-2);
+  }
+  h4 { font-size: var(--step-0); font-weight: 600; }
+  .code-list p { color: var(--sage); font-size: 0.95rem; line-height: 1.55; }
+  .code-list .tags { color: var(--teal-bright); font-size: var(--step--1); }
+</style>

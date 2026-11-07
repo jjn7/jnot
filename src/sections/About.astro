@@ -1,0 +1,61 @@
+---
+import SectionHead from '../components/SectionHead.astro';
+import { about } from '../data/site';
+---
+
+<section class="section" id="about" aria-labelledby="about-title">
+  <div class="wrap">
+    <SectionHead index="04" eyebrow="about" title="Retail and hospitality first, then the web" id="about-title" />
+    <div class="layout">
+      <div class="bio">
+        {about.paragraphs.map((p) => <p>{p}</p>)}
+      </div>
+      <dl class="facts">
+        {
+          about.facts.map((f) => (
+            <div>
+              <dt class="mono">{f.label}</dt>
+              <dd>{f.value}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+  </div>
+</section>
+
+<style>
+  .layout {
+    display: grid;
+    gap: 2.5rem;
+  }
+  @media (min-width: 56em) {
+    .layout {
+      grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+      gap: clamp(3rem, 6vw, 6rem);
+      align-items: start;
+    }
+  }
+  .bio {
+    display: grid;
+    gap: 1.1rem;
+    max-width: 38rem;
+    font-size: var(--step-1);
+    line-height: 1.6;
+  }
+  .bio p:first-child { color: var(--paper); }
+  .facts {
+    display: grid;
+    border-top: 1px solid var(--line-strong);
+    margin-top: 0.4rem;
+  }
+  .facts div {
+    display: grid;
+    grid-template-columns: 6.5rem 1fr;
+    gap: 1rem;
+    padding-block: 0.9rem;
+    border-bottom: 1px solid var(--line);
+  }
+  dt { color: var(--muted); font-size: var(--step--1); padding-top: 0.15rem; }
+  dd { color: var(--mist); }
+</style>

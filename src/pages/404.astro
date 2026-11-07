@@ -1,0 +1,31 @@
+---
+import Base from '../layouts/Base.astro';
+import Frame from '../components/Frame.astro';
+---
+
+<Base title="Page not found · jnot.net" description="This page doesn’t exist." home={false}>
+  <section class="nf">
+    <Frame animate />
+    <div class="wrap inner">
+      <p class="eyebrow">404</p>
+      <h1>That’s not something I’ve built yet<span class="caret" aria-hidden="true">▮</span></h1>
+      <p>The page you asked for doesn’t exist. The rest of the site does.</p>
+      <a class="btn btn-primary" href="/">Back to the home page</a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .nf {
+    position: relative;
+    display: grid;
+    align-items: center;
+    min-height: calc(100svh - var(--header-h) - 6rem);
+    padding-block: 4rem;
+    text-align: center;
+  }
+  .inner { display: grid; justify-items: center; gap: 1.25rem; }
+  h1 { font-size: var(--step-3); max-width: 20ch; }
+  p:not(.eyebrow) { color: var(--sage); }
+  .caret { color: var(--lime); font-weight: 400; }
+</style>

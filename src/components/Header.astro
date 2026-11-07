@@ -1,0 +1,107 @@
+---
+import Logo from './Logo.astro';
+import { nav } from '../data/site';
+
+interface Props {
+  /** On case study pages the section links point back to the home page. */
+  home?: boolean;
+}
+const { home = true } = Astro.props;
+const base = home ? '' : '/';
+---
+
+<header class="site-header">
+  <div class="wrap bar">
+    <a class="brand" href={home ? '#top' : '/'} aria-label="jnot.net, Joel Nottle — home">
+      <Logo label="" />
+    </a>
+    <nav aria-label="Main">
+      <ul role="list">
+        {
+          nav.map((item) => (
+            <li class:list={{ optional: 'optional' in item && item.optional }}>
+              <a href={`${base}${item.href}`} data-nav={item.href.slice(1)}>
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: rgb(6 10 9 / 0.78);
+    backdrop-filter: blur(12px) saturate(1.2);
+    -webkit-backdrop-filter: blur(12px) saturate(1.2);
+    border-bottom: 1px solid var(--line);
+    view-transition-name: site-header;
+  }
+  .bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    height: var(--header-h);
+  }
+  .brand {
+    display: block;
+    width: 4.6rem;
+    padding: 0.35rem 0;
+    flex-shrink: 0;
+  }
+  ul {
+    display: flex;
+    gap: clamp(0.25rem, 2vw, 1.25rem);
+    font-family: var(--mono);
+    font-size: var(--step--1);
+  }
+  li.optional { display: none; }
+  @media (min-width: 40em) {
+    li.optional { display: list-item; }
+  }
+  a[data-nav] {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    padding-inline: 0.45rem;
+    color: var(--sage);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  a[data-nav]:hover,
+  a[data-nav][aria-current] {
+    color: var(--paper);
+  }
+  a[data-nav][aria-current]::before {
+    content: '/';
+    color: var(--lime);
+    margin-right: 0.15em;
+  }
+</style>
+
+<script>
+  // Marks the nav link for the section in view. Without JS the nav still works.
+  const links = new Map(
+    [...document.querySelectorAll<HTMLAnchorElement>('a[data-nav]')].map((a) => [a.dataset.nav!, a]),
+  );
+  const observer = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        links.forEach((a) => a.removeAttribute('aria-current'));
+        links.get(entry.target.id)?.setAttribute('aria-current', 'true');
+      }
+    },
+    { rootMargin: '-45% 0px -50% 0px' },
+  );
+  links.forEach((_, id) => {
+    const section = document.getElementById(id);
+    if (section) observer.observe(section);
+  });
+</script>

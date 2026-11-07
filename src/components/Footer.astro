@@ -1,0 +1,32 @@
+---
+import { site } from '../data/site';
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="wrap row">
+    <p class="mono tag">
+      <span aria-hidden="true">// </span><b>jnot</b> · web designer &amp; developer · {site.footerTag}
+    </p>
+    <p class="mono small">© {year} {site.name}</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: 1px solid var(--line);
+    padding-block: 2rem 2.5rem;
+  }
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 2rem;
+    justify-content: space-between;
+    font-size: var(--step--1);
+    color: var(--muted);
+  }
+  b {
+    color: var(--teal-bright);
+    font-weight: 500;
+  }
+</style>

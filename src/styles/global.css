@@ -1,0 +1,190 @@
+/* ==========================================================================
+   jnot.net — design tokens, reset and shared pieces.
+   Component styles live in each component (scoped by Astro).
+   ========================================================================== */
+
+:root {
+  color-scheme: dark;
+
+  /* surfaces */
+  --ink: #060a09;          /* page */
+  --ink-2: #0b1311;        /* cards, panels */
+  --ink-3: #111c1a;        /* raised / hover */
+  --line: #1a2c29;         /* hairlines */
+  --line-strong: #27433f;
+
+  /* brand — teal from the logo, lime as the spark */
+  --teal-deep: #103f3c;
+  --teal: #2c6b67;         /* logo teal (light-background version), structure */
+  --teal-bright: #5fa39c;  /* logo teal (dark-background version), accents and links */
+  --lime: #b8f24a;
+  --spark: #46e3a6;        /* focus rings */
+
+  /* text — every pair below passes WCAG AA on --ink and --ink-2 */
+  --paper: #f4f7f6;        /* headings (logo off-white) */
+  --mist: #d6e4df;         /* body */
+  --sage: #9bb1aa;         /* secondary */
+  --muted: #80958e;        /* meta, labels */
+
+  /* type */
+  --sans: var(--font-sans), system-ui, sans-serif;
+  --mono: var(--font-mono), ui-monospace, monospace;
+
+  --step--1: clamp(0.8rem, 0.78rem + 0.1vw, 0.86rem);
+  --step-0: clamp(1rem, 0.96rem + 0.2vw, 1.1rem);
+  --step-1: clamp(1.15rem, 1.08rem + 0.35vw, 1.35rem);
+  --step-2: clamp(1.4rem, 1.25rem + 0.75vw, 1.85rem);
+  --step-3: clamp(1.85rem, 1.5rem + 1.75vw, 2.9rem);
+  --step-4: clamp(2.3rem, 1.7rem + 3vw, 4.4rem);
+
+  /* layout */
+  --gutter: clamp(1.25rem, 4vw, 3rem);
+  --max: 74rem;
+  --header-h: 3.75rem;
+  --radius: 8px;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+/* ---------- reset ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+body, h1, h2, h3, h4, p, ul, ol, dl, dd, figure, blockquote { margin: 0; }
+ul[role='list'], ol[role='list'] { list-style: none; padding: 0; }
+img, svg, picture { display: block; max-width: 100%; }
+img { height: auto; }
+button, input { font: inherit; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: calc(var(--header-h) + 1rem);
+}
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+
+body {
+  min-height: 100svh;
+  background: var(--ink);
+  color: var(--mist);
+  font-family: var(--sans);
+  font-size: var(--step-0);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* ambient field: cool teal depth with a faint lime whisper (from the original holding page) */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(120% 70% at 50% -10%, rgb(44 107 103 / 0.18), transparent 55%),
+    radial-gradient(60% 45% at 90% 5%, rgb(184 242 74 / 0.045), transparent 60%),
+    radial-gradient(80% 60% at 10% 110%, rgb(16 63 60 / 0.25), transparent 60%);
+}
+
+h1, h2, h3, h4 {
+  color: var(--paper);
+  font-weight: 600;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+p { text-wrap: pretty; }
+
+a { color: inherit; text-decoration-color: var(--teal); text-underline-offset: 0.2em; }
+a:hover { text-decoration-color: currentColor; }
+
+::selection { background: var(--spark); color: var(--ink); }
+
+:focus-visible {
+  outline: 2px solid var(--spark);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+/* ---------- layout ---------- */
+.wrap {
+  width: min(100% - 2 * var(--gutter), var(--max));
+  margin-inline: auto;
+}
+
+.section {
+  padding-block: clamp(3.75rem, 8vw, 6.25rem);
+}
+.section + .section { border-top: 1px solid var(--line); }
+
+/* ---------- shared bits ---------- */
+.eyebrow {
+  font-family: var(--mono);
+  font-size: var(--step--1);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--teal-bright);
+}
+.eyebrow .slash { color: var(--muted); }
+
+.mono { font-family: var(--mono); }
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  overflow: hidden; clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* buttons */
+.btn {
+  --btn-bg: transparent;
+  --btn-fg: var(--paper);
+  --btn-border: var(--line-strong);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6em;
+  min-height: 3rem;
+  padding: 0.7rem 1.35rem;
+  border: 1px solid var(--btn-border);
+  border-radius: 999px;
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  font-weight: 500;
+  font-size: var(--step-0);
+  line-height: 1.2;
+  text-decoration: none;
+  transition: background-color 0.2s, border-color 0.2s, color 0.2s, transform 0.2s var(--ease);
+}
+.btn:hover { --btn-border: var(--teal-bright); }
+.btn:active { transform: translateY(1px); }
+.btn .arrow { transition: transform 0.2s var(--ease); }
+.btn:hover .arrow { transform: translateX(3px); }
+
+.btn-primary {
+  --btn-bg: var(--lime);
+  --btn-fg: var(--ink);
+  --btn-border: var(--lime);
+  font-weight: 600;
+}
+.btn-primary:hover { --btn-bg: #ccff6e; --btn-border: #ccff6e; }
+
+/* placeholder for content that isn't ready; the launch check finds these */
+.todo {
+  border: 1px dashed rgb(184 242 74 / 0.6);
+  color: var(--lime);
+  font-family: var(--mono);
+  font-size: var(--step--1);
+}
+
+/* page-to-page transitions, no JavaScript */
+@view-transition { navigation: auto; }
+
+@media (prefers-reduced-motion: reduce) {
+  @view-transition { navigation: none; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

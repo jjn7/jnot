@@ -5,56 +5,55 @@ import { getFeatured } from '../lib/projects';
 import { codeWork } from '../data/site';
 
 const projects = await getFeatured();
-const direct = projects.filter((p) => p.data.via === 'direct');
-const agency = projects.filter((p) => p.data.via === 'agency');
 
-const showGroups = direct.length > 0 && agency.length > 0;
+const groups = [
+  {
+    via: 'direct',
+    title: 'Client work',
+    note: 'Designed, built and set up for marketing, working directly with the business owner.',
+  },
+  {
+    via: 'own',
+    title: 'My own ventures',
+    note: 'Sites and software for IP Venture Studio, which I co-founded in 2026.',
+  },
+  {
+    via: 'agency',
+    title: 'Agency work',
+    note: 'Built as a developer at an Adelaide marketing agency.',
+  },
+]
+  .map((g) => ({ ...g, projects: projects.filter((p) => p.data.via === g.via) }))
+  .filter((g) => g.projects.length > 0);
+
+// Headings only help when there's more than one group.
+const showHeads = groups.length > 1;
 ---
 
 <section class="section" id="work" aria-labelledby="work-title">
   <div class="wrap">
     <SectionHead index="01" eyebrow="work" title="Selected work" id="work-title">
-      <p>Websites for small businesses, from the first questions through to launch and marketing setup.</p>
+      <p>Websites and software, from the first brief through to launch. Each one opens a short case study.</p>
     </SectionHead>
 
     {
-      direct.length > 0 && (
+      groups.map((g) => (
         <div class="group">
-          {showGroups && (
+          {showHeads && (
             <div class="group-head">
-              <h3>My own clients</h3>
-              <p>Designed, built and set up for marketing, working directly with the business owner.</p>
+              <h3>{g.title}</h3>
+              <p>{g.note}</p>
             </div>
           )}
-          <ul class="grid grid--direct" role="list">
-            {direct.map((project) => (
+          <ul class:list={['grid', { 'grid--one': g.projects.length === 1, 'grid--pair': g.projects.length === 2 }]} role="list">
+            {g.projects.map((project) => (
               <li>
-                <ProjectCard project={project} wide={direct.length === 1} />
+                <ProjectCard project={project} wide={g.projects.length === 1} />
               </li>
             ))}
           </ul>
         </div>
-      )
-    }
-
-    {
-      agency.length > 0 && (
-        <div class="group">
-          {showGroups && (
-            <div class="group-head">
-              <h3>Agency work</h3>
-              <p>Built as a developer at an Adelaide marketing agency.</p>
-            </div>
-          )}
-          <ul class="grid" role="list">
-            {agency.map((project) => (
-              <li>
-                <ProjectCard project={project} />
-              </li>
-            ))}
-          </ul>
-        </div>
-      )
+      ))
     }
 
     <div class="code">
@@ -100,8 +99,11 @@ const showGroups = direct.length > 0 && agency.length > 0;
   @media (min-width: 75em) {
     .grid { grid-template-columns: repeat(3, 1fr); }
   }
-  /* a lone direct client gets the full width */
-  .grid--direct:has(> li:only-child) { grid-template-columns: 1fr; }
+  /* a single project gets the full width; a pair stays two-up */
+  .grid--one { grid-template-columns: 1fr !important; }
+  @media (min-width: 75em) {
+    .grid--pair { grid-template-columns: repeat(2, 1fr); }
+  }
 
   .code {
     margin-top: clamp(3rem, 6vw, 4.5rem);
@@ -118,7 +120,7 @@ const showGroups = direct.length > 0 && agency.length > 0;
     overflow: hidden;
   }
   @media (min-width: 52em) {
-    .code-list { grid-template-columns: repeat(3, 1fr); }
+    .code-list { grid-template-columns: repeat(2, 1fr); }
   }
   .code-list li {
     display: grid;

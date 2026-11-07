@@ -6,7 +6,7 @@ import Process from '../sections/Process.astro';
 import Skills from '../sections/Skills.astro';
 import About from '../sections/About.astro';
 import Contact from '../sections/Contact.astro';
-import { site } from '../data/site';
+import { site, contact } from '../data/site';
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -15,6 +15,9 @@ const jsonLd = {
   url: site.url,
   jobTitle: 'Web Designer & Developer',
   description: site.lede,
+  sameAs: [contact.linkedin].filter(Boolean),
+  worksFor: { '@type': 'Organization', name: 'IP Venture Studio', url: 'https://ipventurestudio.com.au' },
+  alumniOf: { '@type': 'EducationalOrganization', name: '42 Adelaide' },
 };
 ---
 

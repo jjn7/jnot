@@ -22,11 +22,12 @@ const projects = defineCollection({
     featured: z.boolean().default(false),
 
     /**
-     * Who the work was for. `direct` = my own client; `agency` = built as a developer
-     * at an Adelaide marketing agency. Never write the agency's name anywhere in this
-     * repo: it's public, and the name shouldn't be searchable alongside mine.
+     * Who the work was for. `direct` = my own client; `own` = my own ventures and
+     * products; `agency` = built as a developer at an Adelaide marketing agency.
+     * Never write the agency's name anywhere in this repo: it's public, and the name
+     * shouldn't be searchable alongside mine.
      */
-    via: z.enum(['direct', 'agency']),
+    via: z.enum(['direct', 'own', 'agency']),
 
     /**
      * The client's real name. Leave it out until the client (and, for agency work,

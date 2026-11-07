@@ -16,6 +16,7 @@ built:
   - A portfolio section that describes six assets from a safe distance
   - Pages for government, research and manufacturing partners, and an enquiry form
   - Hosted on Cloudflare, with GA4 set up from launch
+stack: [HTML, CSS, JavaScript, Cloudflare, GA4]
 url: https://ipventurestudio.com.au
 draft: true # check the platform line, then set to false
 ---

@@ -1,0 +1,76 @@
+---
+/**
+ * A client build without a case study page: title, client type, a short
+ * description and stack tags. Same look as ProjectCard, minus the screenshots.
+ */
+interface Props {
+  title: string;
+  client: string;
+  body: string;
+  tags: readonly string[];
+  status?: string;
+}
+const { title, client, body, tags, status } = Astro.props;
+---
+
+<article class="card">
+  <p class="meta mono">
+    <span>{client}</span>
+    {status && <span class="status">{status}</span>}
+  </p>
+  <h4>{title}</h4>
+  <p class="body">{body}</p>
+  <p class="tags mono"><span class="visually-hidden">Built with: </span>{tags.join(' · ')}</p>
+</article>
+
+<style>
+  .card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    height: 100%;
+    padding: 1.25rem 1.35rem 1.4rem;
+    background: var(--ink-2);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+  }
+  /* the same logo-style brackets as the project cards */
+  .card::before,
+  .card::after {
+    content: '';
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    border: 2px solid var(--teal);
+    pointer-events: none;
+  }
+  .card::before { top: -6px; left: -6px; border-right: 0; border-bottom: 0; }
+  .card::after { bottom: -6px; right: -6px; border-left: 0; border-top: 0; }
+
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 0.9rem;
+    font-size: var(--step--1);
+    color: var(--muted);
+  }
+  .status { color: var(--lime); }
+  h4 {
+    font-size: var(--step-1);
+    font-weight: 600;
+    line-height: 1.25;
+  }
+  .body {
+    color: var(--sage);
+    font-size: 0.95rem;
+    line-height: 1.55;
+  }
+  .tags {
+    margin-top: auto;
+    line-height: 1.6;
+    padding-top: 0.5rem;
+    font-size: var(--step--1);
+    color: var(--teal-bright);
+  }
+</style>

@@ -1,6 +1,6 @@
 ---
 import SectionHead from '../components/SectionHead.astro';
-import { process } from '../data/site';
+import { process, services } from '../data/site';
 ---
 
 <section class="section" id="process" aria-labelledby="process-title">
@@ -19,10 +19,42 @@ import { process } from '../data/site';
         ))
       }
     </ol>
+
+    <div class="services">
+      <h3 class="eyebrow" id="services-title">What I can help with</h3>
+      <ul role="list" aria-labelledby="services-title">
+        {services.map((s) => <li>{s}</li>)}
+      </ul>
+    </div>
   </div>
 </section>
 
 <style>
+  .services {
+    margin-top: clamp(2.75rem, 5vw, 4rem);
+    padding-top: 1.75rem;
+    border-top: 1px dashed var(--line-strong);
+  }
+  .services h3 { margin-bottom: 1.1rem; }
+  @media (min-width: 48em) {
+    .services ul { columns: 2; column-gap: 2.5rem; }
+  }
+  .services li {
+    position: relative;
+    break-inside: avoid;
+    padding: 0.7rem 0 0.7rem 1.6rem;
+    border-bottom: 1px solid var(--line);
+    color: var(--mist);
+    font-size: 0.98rem;
+    line-height: 1.45;
+  }
+  .services li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--lime);
+    font-family: var(--mono);
+  }
   .steps {
     display: grid;
     gap: 2rem 1.75rem;
@@ -33,7 +65,7 @@ import { process } from '../data/site';
   @media (min-width: 64em) {
     .steps { grid-template-columns: repeat(4, 1fr); }
   }
-  li {
+  .steps > li {
     position: relative;
     display: grid;
     gap: 0.55rem;
@@ -42,7 +74,7 @@ import { process } from '../data/site';
     border-top: 1px solid var(--line-strong);
   }
   /* a short lime tick on each rule, like a progress marker */
-  li::before {
+  .steps > li::before {
     content: '';
     position: absolute;
     top: -1px;
@@ -52,6 +84,6 @@ import { process } from '../data/site';
     background: var(--lime);
   }
   .num { color: var(--teal-bright); font-size: var(--step--1); }
-  h3 { font-size: var(--step-1); }
-  p { color: var(--sage); font-size: 0.97rem; }
+  .steps h3 { font-size: var(--step-1); }
+  .steps p { color: var(--sage); font-size: 0.97rem; }
 </style>

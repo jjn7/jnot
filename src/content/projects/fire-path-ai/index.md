@@ -8,7 +8,7 @@ clientType: Bushfire prediction platform, IP Venture Studio
 location: Adelaide, South Australia
 platform: React Native, Node.js, PostgreSQL/PostGIS and AWS
 role: Platform architect and developer
-summary: A bushfire spread prediction platform I designed and built from scratch, from the data pipeline to the prototype app and website.
+summary: A physics-based bushfire spread prediction platform I designed and built from scratch, from the data pipeline to the prototype app and website.
 brief: Bring satellite hotspots, weather and terrain together in one place, and estimate where a fire may spread and when it could reach the assets people care about.
 built:
   - A data pipeline combining NASA FIRMS and Digital Earth Australia hotspots with Bureau of Meteorology weather
@@ -16,6 +16,7 @@ built:
   - The prototype mobile app, built from scratch in React Native (Expo) with MapLibre maps
   - The API and spatial database in Node.js/Express and PostgreSQL/PostGIS, hosted on AWS
   - The Fire Path AI website, built in Astro
+stack: [Expo, React Native, MapLibre, Node.js / Express 5, PostgreSQL / PostGIS, Open-Meteo, WindNinja, AWS]
 url: https://www.firepath.software
 draft: false
 ---

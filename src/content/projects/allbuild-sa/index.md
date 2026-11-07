@@ -16,6 +16,8 @@ built:
   - Ceiling hoist packages with fixed prices and an enquiry form
   - Local SEO with Yoast, structured data for the business, services and FAQs, and a service-area page
   - Google Tag Manager and Google Ads set up in full, including conversion tracking
+  - Replaced their Word-document service agreement with an online signing workflow, using Gravity Forms, Gravity PDF and two-stage counter-signing, with signed copies delivered by email
+stack: [WordPress, Cornerstone, Google Tag Manager, Google Ads, Gravity Forms, Gravity PDF, Brevo]
 url: https://allbuildsa.com.au
 draft: true # check the brief and bullets, then set to false
 ---

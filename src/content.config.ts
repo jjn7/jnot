@@ -47,8 +47,10 @@ const projects = defineCollection({
     summary: z.string(),
     /** The brief, in 1–2 sentences. */
     brief: z.string(),
-    /** What I built: 3–5 bullets. */
-    built: z.array(z.string()).min(3).max(5),
+    /** What I built: 3–6 bullets. */
+    built: z.array(z.string()).min(3).max(6),
+    /** Stack tags, shown on the card and the case study. */
+    stack: z.array(z.string()).default([]),
 
     /** Live site. Leave out until it's confirmed and linkable. */
     url: z.url().optional(),

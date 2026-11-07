@@ -80,6 +80,11 @@ const rows: Row[] = [
     padding: 0.85rem 0.25rem;
     text-decoration: none;
   }
+  /* phones: label above the value so long addresses don't break mid-word */
+  @media (max-width: 39.99em) {
+    .links a, .row-todo { grid-template-columns: 1fr auto; gap: 0.15rem 1rem; }
+    .label { grid-column: 1 / -1; }
+  }
   @media (min-width: 40em) {
     .links a, .row-todo { grid-template-columns: 8rem 1fr auto; }
   }
@@ -89,7 +94,7 @@ const rows: Row[] = [
     color: var(--paper);
     font-size: var(--step-1);
     font-weight: 500;
-    overflow-wrap: anywhere;
+    overflow-wrap: break-word;
     transition: color 0.2s;
   }
   .row-todo .value { color: var(--lime); font-size: var(--step--1); font-weight: 400; }

@@ -48,6 +48,14 @@ const shotAlt = (kind: string) =>
         <div><dt class="mono">Location</dt><dd>{d.location}</dd></div>
         <div><dt class="mono">Platform</dt><dd>{d.platform}</dd></div>
         <div><dt class="mono">My role</dt><dd>{d.role}</dd></div>
+        {d.stack.length > 0 && (
+          <div class="stack-row">
+            <dt class="mono">Stack</dt>
+            <dd>
+              <ul role="list" class="chips">{d.stack.map((t) => <li>{t}</li>)}</ul>
+            </dd>
+          </div>
+        )}
       </dl>
     </header>
 
@@ -161,6 +169,16 @@ const shotAlt = (kind: string) =>
     .facts { grid-template-columns: repeat(4, 1fr); }
   }
   dt { font-size: var(--step--1); color: var(--muted); margin-bottom: 0.2rem; }
+  .stack-row { grid-column: 1 / -1; }
+  .chips { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-top: 0.35rem; }
+  .chips li {
+    padding: 0.25rem 0.7rem;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    background: var(--ink-2);
+    font-size: 0.9rem;
+    color: var(--mist);
+  }
   dd { color: var(--paper); line-height: 1.4; }
 
   /* desktop and phone side by side, at every size */

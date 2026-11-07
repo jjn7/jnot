@@ -1,6 +1,9 @@
 ---
 import SectionHead from '../components/SectionHead.astro';
-import { skills } from '../data/site';
+import { skills, type Skill } from '../data/site';
+
+const nameOf = (s: Skill) => (typeof s === 'string' ? s : s.name);
+const detailOf = (s: Skill) => (typeof s === 'string' ? undefined : s.detail);
 ---
 
 <section class="section" id="skills" aria-labelledby="skills-title">
@@ -13,11 +16,25 @@ import { skills } from '../data/site';
         skills.map((g) => (
           <div class="group">
             <h3 class="mono">{g.group}</h3>
-            <ul role="list">
-              {g.items.map((item) => (
-                <li>{item}</li>
-              ))}
-            </ul>
+            {g.rows ? (
+              <ul role="list" class="rows">
+                {g.items.map((item) => (
+                  <li>
+                    <span>{nameOf(item)}</span>
+                    {detailOf(item) && <span class="detail">{detailOf(item)}</span>}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <ul role="list" class="chips">
+                {g.items.map((item) => (
+                  <li class:list={{ 'has-detail': Boolean(detailOf(item)) }}>
+                    {nameOf(item)}
+                    {detailOf(item) && <span class="detail">{detailOf(item)}</span>}
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
         ))
       }
@@ -28,14 +45,22 @@ import { skills } from '../data/site';
 <style>
   .groups {
     display: grid;
-    gap: 2rem 1.75rem;
+    gap: 2.25rem 1.75rem;
   }
   @media (min-width: 40em) {
     .groups { grid-template-columns: repeat(2, 1fr); }
   }
   @media (min-width: 64em) {
-    .groups { grid-template-columns: repeat(3, 1fr); gap: 2.25rem 2.5rem; }
+    .groups { grid-template-columns: repeat(3, 1fr); gap: 2.5rem; }
   }
+  /* seven groups: the last one spans the row rather than sitting alone */
+  @media (min-width: 40em) and (max-width: 63.99em) {
+    .group:last-child:nth-child(odd) { grid-column: 1 / -1; }
+  }
+  @media (min-width: 64em) {
+    .group:last-child:nth-child(3n + 1) { grid-column: 1 / -1; }
+  }
+
   h3 {
     margin-bottom: 0.9rem;
     font-size: var(--step--1);
@@ -43,12 +68,14 @@ import { skills } from '../data/site';
     letter-spacing: 0.04em;
     color: var(--teal-bright);
   }
-  ul {
+
+  .chips {
     display: flex;
     flex-wrap: wrap;
+    align-items: flex-start;
     gap: 0.5rem;
   }
-  li {
+  .chips li {
     padding: 0.35rem 0.8rem;
     border: 1px solid var(--line-strong);
     border-radius: 999px;
@@ -56,5 +83,26 @@ import { skills } from '../data/site';
     font-size: 0.92rem;
     color: var(--mist);
     line-height: 1.4;
+  }
+  /* a chip with detail becomes a small two-line tile */
+  .chips li.has-detail { border-radius: 12px; }
+
+  .rows { border-top: 1px solid var(--line); }
+  .rows li {
+    display: grid;
+    gap: 0.1rem;
+    padding-block: 0.5rem;
+    border-bottom: 1px solid var(--line);
+    font-size: 0.92rem;
+    color: var(--mist);
+  }
+
+  .detail {
+    display: block;
+    margin-top: 0.1rem;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    line-height: 1.45;
+    color: var(--muted);
   }
 </style>

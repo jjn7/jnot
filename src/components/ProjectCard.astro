@@ -36,6 +36,7 @@ const sizes = wide
     </h3>
     <p class="summary">{p.data.summary}</p>
     {wide && <p class="role mono">{p.data.role}</p>}
+    {p.data.stack.length > 0 && <p class="stack mono">{p.data.stack.join(' · ')}</p>}
     <p class="cta mono" aria-hidden="true">Case study <span class="arrow">→</span></p>
   </div>
 </article>
@@ -130,6 +131,7 @@ const sizes = wide
   .stretched:focus-visible::after { outline: 2px solid var(--spark); outline-offset: 4px; }
   .summary { color: var(--sage); font-size: 0.97rem; }
   .role { color: var(--teal-bright); font-size: var(--step--1); }
+  .stack { color: var(--muted); font-size: var(--step--1); line-height: 1.6; }
 
   /* wide: screenshots left, text right */
   @media (min-width: 56em) {

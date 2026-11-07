@@ -1,8 +1,9 @@
 ---
 import SectionHead from '../components/SectionHead.astro';
 import ProjectCard from '../components/ProjectCard.astro';
+import BuildCard from '../components/BuildCard.astro';
 import { getFeatured } from '../lib/projects';
-import { codeWork } from '../data/site';
+import { codeWork, clientBuilds } from '../data/site';
 
 const projects = await getFeatured();
 
@@ -10,7 +11,8 @@ const groups = [
   {
     via: 'direct',
     title: 'Client work',
-    note: 'Designed, built and set up for marketing, working directly with the business owner.',
+    note: 'Some directly with the business owner, some as a developer at an Adelaide studio. Agency clients aren’t named.',
+    builds: clientBuilds,
   },
   {
     via: 'own',
@@ -23,8 +25,8 @@ const groups = [
     note: 'Built as a developer at an Adelaide marketing agency.',
   },
 ]
-  .map((g) => ({ ...g, projects: projects.filter((p) => p.data.via === g.via) }))
-  .filter((g) => g.projects.length > 0);
+  .map((g) => ({ builds: [], ...g, projects: projects.filter((p) => p.data.via === g.via) }))
+  .filter((g) => g.projects.length > 0 || g.builds.length > 0);
 
 // Headings only help when there's more than one group.
 const showHeads = groups.length > 1;
@@ -33,7 +35,7 @@ const showHeads = groups.length > 1;
 <section class="section" id="work" aria-labelledby="work-title">
   <div class="wrap">
     <SectionHead index="01" eyebrow="work" title="Selected work" id="work-title">
-      <p>Websites and software, from the first brief through to launch. Each one opens a short case study.</p>
+      <p>Websites and software, from the first brief through to launch.</p>
     </SectionHead>
 
     {
@@ -45,13 +47,24 @@ const showHeads = groups.length > 1;
               <p>{g.note}</p>
             </div>
           )}
-          <ul class:list={['grid', { 'grid--one': g.projects.length === 1, 'grid--pair': g.projects.length === 2 }]} role="list">
-            {g.projects.map((project) => (
-              <li>
-                <ProjectCard project={project} wide={g.projects.length === 1} />
-              </li>
-            ))}
-          </ul>
+          {g.projects.length > 0 && (
+            <ul class:list={['grid', { 'grid--one': g.projects.length === 1, 'grid--pair': g.projects.length === 2 }]} role="list">
+              {g.projects.map((project) => (
+                <li>
+                  <ProjectCard project={project} wide={g.projects.length === 1} />
+                </li>
+              ))}
+            </ul>
+          )}
+          {g.builds.length > 0 && (
+            <ul class="grid builds" role="list">
+              {g.builds.map((b) => (
+                <li>
+                  <BuildCard {...b} />
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       ))
     }
@@ -104,6 +117,15 @@ const showHeads = groups.length > 1;
   @media (min-width: 75em) {
     .grid--pair { grid-template-columns: repeat(2, 1fr); }
   }
+  .grid + .builds { margin-top: clamp(1.25rem, 2.5vw, 1.75rem); }
+
+  /* a last card on its own row spans the row, so the grid never ends with a gap */
+  @media (min-width: 44em) and (max-width: 74.99em) {
+    .builds > li:last-child:nth-child(odd) { grid-column: 1 / -1; }
+  }
+  @media (min-width: 75em) {
+    .builds > li:last-child:nth-child(3n + 1) { grid-column: 1 / -1; }
+  }
 
   .code {
     margin-top: clamp(3rem, 6vw, 4.5rem);
@@ -121,6 +143,8 @@ const showHeads = groups.length > 1;
   }
   @media (min-width: 52em) {
     .code-list { grid-template-columns: repeat(3, 1fr); }
+    .code-list > li:last-child:nth-child(3n + 1) { grid-column: 1 / -1; }
+    .code-list > li:last-child:nth-child(3n + 2) { grid-column: span 2; }
   }
   .code-list li {
     display: grid;

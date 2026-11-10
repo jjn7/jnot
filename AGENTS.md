@@ -25,7 +25,8 @@ Consult these guides before working on related tasks:
 
 - Portfolio for jnot.net. See README.md for structure and commands.
 - Copy that isn't a case study lives in `src/data/site.ts`; case studies in `src/content/projects/<id>/index.md`.
-- Commit straight to `main`; every push deploys to jnot.net immediately. No feature branches or pull requests.
+- Joel commits and pushes. Never commit or push unless asked to in that message. Every push to `main` deploys to jnot.net immediately; no feature branches or pull requests.
+- Commit messages describe the change only: no trailers or footers.
 - Anything unfinished renders with a `data-todo` attribute; `npm run launch-check` lists them (report only, it doesn't block deploys).
 - No resume on the site. It's for winning direct work, not job applications.
 - Australian spelling, plain first-person voice. Keep text contrast at WCAG AA (tokens in `src/styles/global.css` are checked).

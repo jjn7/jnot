@@ -273,8 +273,8 @@ export const codeWork = [
     tags: ['PHP', 'WordPress', 'In progress'],
   },
   {
-    title: 'Resolute Ready app',
-    body: 'A mobile resources app for Resolute Ready, with its own content management platform, built from the ground up.',
+    title: 'Mobile resources app',
+    body: 'A mobile resources app for a client, with its own content management platform, built from the ground up.',
     tags: ['Mobile app', 'AWS ECS Fargate', 'RDS PostgreSQL', 'S3', 'Cloudflare', 'In progress'],
   },
   {
